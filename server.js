@@ -16,7 +16,7 @@ app.use(cors());
 app.use(postRoutes)
 
 
-const PORT = 8000;
+const PORT =  process.env.PORT || 8000;
 const DB_URL = "mongodb+srv://vjs9c:vjs9c@inv2.ykh4t.mongodb.net/inv2?retryWrites=true&w=majority";
 
 mongoose.connect(DB_URL,{
@@ -29,6 +29,12 @@ mongoose.connect(DB_URL,{
 })
 .catch(err => console.log("db con error",err));
 
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'));
+
+   
+}
 
 app.listen(PORT, () => {    
     console.log(`Server is running on port ${PORT}`);
